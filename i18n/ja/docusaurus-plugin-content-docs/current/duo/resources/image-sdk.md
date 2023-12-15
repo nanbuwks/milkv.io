@@ -6,7 +6,7 @@ sidebar_position: 10
 # 公式イメージとSDK
 
 ## イメージ
-- **(最新の)** milkv-duo-xxx.img.zip  
+- **(最新版)** [サイトのmilkv-duo-xxx.img.zipを使ってください](https://github.com/milkv-duo/duo-buildroot-sdk/releases/)
     新しいイメージとSDKをアップロード:
 
     sshを有効化  
