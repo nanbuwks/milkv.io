@@ -308,9 +308,8 @@ int main() {
     return 0;
 }
 ```
-After compiling and running it on Duo, you can use a multimeter or an oscilloscope to measure the state of pin 20 and verify if it matches the expected behavior
+Duo でコンパイルして実行した後、マルチメータまたはオシロスコープを使用してピン 20 の状態を測定し、それが予想される動作と一致するかどうかを確認できます。
 
-You can also use the onboard LED pin to verify the behavior. By observing the on/off state of the LED, you can intuitively determine if the program is executing correctly. The WiringX pin number for the LED is `25`. Simply modify the code mentioned above by replacing pin `15` with pin `25`. However, please note that the default firmware has a script to control LED blinking on startup, which needs to be disabled. You can refer to the example explanation for [blink](#blink) below for instructions on how to disable it
 
 Duo でコンパイルして実行した後、マルチメータまたはオシロスコープを使用してピン 20 の状態を測定し、それが予想される動作と一致するかどうかを確認できます。
 
