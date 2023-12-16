@@ -94,10 +94,12 @@ Milk-V Duoは、CV1800Bチップを基にしたコンパクトな組み込み開
 - ユニバーサル基板とブレッドボードと互換性があります。
 
 ## クイックスタート
-- 慣れている方は、下から直にダウンロードしてください。初めての方はタブから始め方(Getting Started)を参照ください。
-[イメージのダウンロード](https://github.com/milkv-duo/duo-buildroot-sdk/releases)
+- 慣れている方は、下から直にダウンロードしてください。
+初めての方はタブから始め方(Getting Started)を参照ください。
+- また日本語訳に関して、大元である英語版を翻訳しております。上手く動かない場合は翻訳時のミスも疑い英語版をみてください。更新頻度は英語が早いです。
+- [イメージのダウンロード](https://github.com/milkv-duo/duo-buildroot-sdk/releases)
 
-[SDKに関して](https://milkv.io/docs/duo/getting-started/buildroot-sdk)
+- [SDKに関して](https://milkv.io/docs/duo/getting-started/buildroot-sdk)
 
 ## サポート
 疑問がある場合こちらの世界中のメンバーが集まるコミュニティで相談してみてください。 [Milk-V Community Duo Category](https://community.milkv.io/c/duo/5).
