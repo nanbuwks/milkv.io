@@ -57,7 +57,7 @@ https://github.com/nihui/opencv-mobile/releases/latest
 
 ## ARM Linux、Windows、Linux、WebAssemblyでの使用方法
 
-1. アーカイブを以下に展開します。 ```<project dir>/```
+1. 圧縮ファイルを ```<project dir>/``` に展開します。
 2.  ```<project dir>/CMakeListst.txt``` の箇所を見つけて OpenCV へのリンクに変更します
 3. Windows でのビルドのためには、cmake option  ```-DOpenCV_STATIC=ON``` を追加します
 
