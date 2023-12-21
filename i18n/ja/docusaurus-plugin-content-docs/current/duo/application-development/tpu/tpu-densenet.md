@@ -5,13 +5,13 @@ sidebar_position: 39
 
 # Densenet に基づく画像分類
 
-## 1. Docker開発環境を構成する
+## 1. Docker 開発環境を構成する
 
-[こちら](https://milkv.io/docs/duo/application-development/tpu/tpu-docker).を参照してください。Docker開発環境を設定した後、次のステップを続けるためにここに戻ってきてください。
+[こちら](https://milkv.io/docs/duo/application-development/tpu/tpu-docker).を参照してください。Docker 開発環境を設定した後、次のステップを続けるためにここに戻ってきてください。
 
-## 2. Docker内で作業ディレクトリを準備する
+## 2. Docker 内で作業ディレクトリを準備する
 
-`densenet121`という作業ディレクトリを作成し、それに入ります。これは`tpu-mlir`と同じレベルのディレクトリであることに注意してください
+`densenet121`という作業ディレクトリを作成し、それに入ります。これは `tpu-mlir` と同じ階層のディレクトリであることに注意してください
 ```
 # mkdir densenet121 && cd densenet121
 ```
@@ -20,11 +20,11 @@ sidebar_position: 39
 ```
 # wget https://github.com/onnx/models/raw/main/vision/classification/densenet-121/model/densenet-12.tar.gz
 ```
- `densenet-12.tar.gz`を展開します
+ `densenet-12.tar.gz` を展開します
 ```
 # tar -zxvf densenet-12.tar.gz
 ```
-展開が完了すると、現在のディレクトリに`densenet-12`フォルダが生成され、その中に`densenet-12.onnx`モデルファイルが含まれます。
+展開が完了すると、現在のディレクトリに `densenet-12` フォルダが生成され、その中に `densenet-12.onnx` モデルファイルが含まれます。
 
 テスト画像をコピーします：
 ```
@@ -39,23 +39,20 @@ Create and enter the `work` working directory to store compiled files such as `M
 # mkdir work && cd work
 ```
 
-## 3. ONNXモデルの変換
+## 3. ONNX モデルの変換
 
 :::tip
-tip Duo開発ボードはCV1800Bチップを搭載しており、**ONNX series**と**Caffe models**をサポートしています。現在、TFLiteモデルはサポートしていません。量子化データ型については、**quantization in BF16 format**と**asymmetric quantization in INT8 format**をサポートしています。
+Duo 開発ボードは CV1800B チップを搭載しており、 **ONNX series** と **Caffe models** をサポートしています。現在、TFLiteモデルはサポートしていません。量子化データ型については、**quantization in BF16 format** と **asymmetric quantization in INT8 format**をサポートしています。
 :::
 
 モデル変換の手順は以下の通りです：
-- ONNXモデルをMLIRに変換
+- ONNX モデルを MLIR に変換
 - 量子化に必要なキャリブレーションテーブルを生成
-- MLIRをINT8非対称cvimodelに量子化
+- MLIR を INT8 非対称 cvimodel に量子化
 
-### ONNXモデルをMLIRに変換
+### ONNX モデルをMLIR に変換
 
-The model in this example is RGB input, `mean` and `scale` are `123.675`,`116.28`,`103.53` and `0.0171`,`0.0175`,`0.0174` respectively.
-
-The command to convert an ONNX model to an MLIR model is as follows:
-この例のモデルはRGB入力で、`mean`と `scale` はそれぞれ`123.675`,`116.28`,`103.53`,`0.0171`,`0.0175`,`0.0174` です。
+この例でのモデルは RGB で入力され、 `mean` および `scale` はそれぞれ `123.675`,`116.28`,`103.53` および `0.0171`,`0.0175`,`0.0174` です。
 
 ONNXモデルをMLIRモデルに変換するコマンドは以下の通りです：
 ```
@@ -125,32 +122,32 @@ model_deploy.py \
 
 ![duo](/docs/duo/tpu/duo-tpu-densenet_10.png)
 
-## 4. Duo開発ボードでの検証
+## 4. Duo 開発ボードでの検証
 
-### Duo開発ボードの接続
+### Duo 開発ボードの接続
 
-前のチュートリアルに従ってDuo開発ボードとコンピュータの接続を完了し、`mobaxterm`や`Xshell`などのツールを使用してDuo開発ボードを操作するためのターミナルを開きます。
+前のチュートリアルに従って Duo 開発ボードとコンピュータの接続を完了し、`mobaxterm`や`Xshell`などのツールを使用して Duo 開発ボードを操作するためのターミナルを開きます。
 
 ### tpu-sdkの取得
 
-Dockerターミナルで`/workspace`ディレクトリに切り替えます
+Docke ターミナルで `/workspace` ディレクトリに切り替えます
 ```
 cd /workspace
 ```
 
-tpu-sdkをダウンロードします
+tpu-sdk をダウンロードします
 ```
 git clone https://github.com/milkv-duo/tpu-sdk.git
 ```
 
 ### tpu-sdkとモデルファイルをDuoにコピー
 
-Duoボードのターミナルで、新しいディレクトリ`/mnt/tpu/`を作成します
+Duoボードのターミナルで、新しいディレクトリ `/mnt/tpu/` を作成します
 ```
 # mkdir -p /mnt/tpu && cd /mnt/tpu
 ```
 
-Dockerターミナルで、`tpu-sdk`とモデルファイルをDuoにコピーします
+Dockerターミナルで、`tpu-sdk` とモデルファイルを Duo にコピーします
 ```
 # scp -r /workspace/tpu-sdk root@192.168.42.1:/mnt/tpu/
 # scp /workspace/densenet121/work/densenet121_cv180x_int8_fuse.cvimodel root@192.168.42.1:/mnt/tpu/tpu-sdk/

@@ -21,15 +21,15 @@ By Nihui
 ![Firefox](https://img.shields.io/badge/Firefox-FF7139?style=for-the-badge&logo=Firefox-Browser&logoColor=white)
 ![Chrome](https://img.shields.io/badge/Chrome-4285F4?style=for-the-badge&logo=Google-chrome&logoColor=white)
 
-:heavy_check_mark: このプロジェクトは、**Android**、**iOS**、および**ARM Linux**プラットフォーム向けのOpenCVライブラリの最小ビルドを提供します。
+:heavy_check_mark: このプロジェクトは、**Android**、**iOS**、および**ARM Linux**プラットフォーム向けの OpenCV ライブラリの最小ビルドを提供します。
 
-:heavy_check_mark:  **Windows**、**Linux**、**MacOS**、および**WebAssembly**向けのパッケージが利用可能です。
+:heavy_check_mark:  **Windows**、**Linux**、**MacOS**、および **WebAssembly** 向けのパッケージが利用可能です。
 
 :heavy_check_mark: **2.4.13.7**、**3.4.20**、および**4.8.0**の事前ビルドバイナリパッケージを提供します。
 
-:heavy_check_mark: 公式パッケージにはない**iOS/iOS-Simulator用のビットコードが有効な事前ビルドバイナリパッケージ**も提供します。
+:heavy_check_mark: 公式パッケージにはない **ビットコードを有効にしたiOS/iOS-Simulator**用のプレビルド済バイナリパッケージも提供します。
 
-:heavy_check_mark:公式パッケージにはない**Mac-Catalyst**および**Apple xcframework用の事前ビルドバイナリパッケージ**も提供します。
+:heavy_check_mark:公式パッケージにはない **Mac-Catalyst**および**Apple xcframework**用のビルド済バイナリパッケージも提供します。
 
 :heavy_check_mark: すべてのバイナリはGitHubアクション上でソースからコンパイルされています。**ウイルスなし**、**バックドアなし**、**秘密のコードなし**。
 
@@ -50,16 +50,16 @@ https://github.com/nihui/opencv-mobile/releases/latest
 [opencv4-milkv-duo-url]: https://github.com/nihui/opencv-mobile/releases/latest/download/opencv-mobile-4.8.0-milkv-duo.zip
 
 
-* Androidパッケージはndk r25cとandroid api 24でビルドされています
-* iOS / iOS-Simulator / MacOS / Mac-CatalystパッケージはXcode 13.4.1でビルドされています
-* ARM LinuxパッケージはUbuntu-22.04上のクロスコンパイラでビルドされています
-* WebAssemblyパッケージはEmscripten 3.1.28でビルドされています
+* Android パッケージは ndk r25c と android api 24 でビルドされています
+* iOS / iOS-Simulator / MacOS / Mac-Catalyst パッケージは Xcode 13.4.1で ビルドされています
+* ARM Linux パッケージは Ubuntu-22.04 上のクロスコンパイラでビルドされています
+* WebAssembly パッケージは Emscripten 3.1.28 でビルドされています
 
 ## ARM Linux、Windows、Linux、WebAssemblyでの使用方法
 
 1. アーカイブを以下に展開します。 ```<project dir>/```
-2.  ```<project dir>/CMakeListst.txt``` を変更してOpenCVを見つけてリンクします
-3. Pass ```-DOpenCV_STATIC=ON``` to cmake option for windows build
+2.  ```<project dir>/CMakeListst.txt``` の箇所を見つけて OpenCV へのリンクに変更します
+3. windows のビルドのためには、cmake option  ```-DOpenCV_STATIC=ON``` を追加します
 
 ```cmake
 set(OpenCV_DIR ${CMAKE_SOURCE_DIR}/opencv-mobile-4.8.0-armlinux/arm-linux-gnueabihf/lib/cmake/opencv4)
@@ -70,14 +70,14 @@ target_link_libraries(your_target ${OpenCV_LIBS})
 
 ## カスタムパッケージをビルドする方法
 
-**ステップ1. OpenCVのソースをダウンロード**
+**ステップ1. OpenCV のソースをダウンロード**
 ```shell
 wget -q https://github.com/opencv/opencv/archive/4.8.0.zip -O opencv-4.8.0.zip
 unzip -q opencv-4.8.0.zip
 cd opencv-4.8.0
 ```
 
-**ステップ2. zlib依存関係を削除し、stbベースのhighgui実装を使用する (オプション)**
+**ステップ2. zlib 依存関係を削除し、stb ベースの highgui 実装を使用する (オプション)**
 ```shell
 patch -p1 -i ../opencv-4.8.0-no-zlib.patch
 truncate -s 0 cmake/OpenCVFindLibsGrfmt.cmake
@@ -86,14 +86,14 @@ rm -rf modules/highgui
 cp -r ../highgui modules/
 ```
 
-**ステップ3. no-rttiビルドのためのopencvソースをパッチする (オプション)**
+**ステップ3. no-rtti ビルドのために opencv ソースにパッチを追加 (オプション)**
 ```shell
 patch -p1 -i ../opencv-4.8.0-no-rtti.patch
 ```
 
-**step 4. opencvのオプションをopencv4_cmake_options.txtに適用します**
+**step 4. opencv のオプションを opencv4_cmake_options.txt に適用します**
 
-**ステップ5. cmakeでopencvパッケージをビルドします**
+**ステップ5. cmake で opencv パッケージをビルドします**
 ```shell
 mkdir -p build
 cd build
@@ -108,15 +108,15 @@ cmake -DCMAKE_INSTALL_PREFIX=install \
 zip -r -9 opencv-mobile-4.8.0.zip install
 ```
 
-## 幾つかの重要点
+## 注意点
 
-*最小限の opencv ビルドには、最も基本的な opencv 演算子と一般的な画像処理関数が含まれており、キーポイント特徴の抽出とマッチング、画像修復、オプティカルフロー推定などの便利な追加機能も含まれています。
+* 最小限の opencv ビルドには、最も基本的な opencv 演算子と一般的な画像処理関数が含まれており、キーポイント特徴の抽出とマッチング、画像修復、オプティカルフロー推定などの便利な追加機能も含まれています。
 
 * 顔検出など、専用モジュールに存在する多くのコンピューター ビジョン アルゴリズムは破棄されます。[モバイル用に最適化されたニューラル ネットワーク推論ライブラリを使用したディープラーニング ベースのアルゴリズムを試すことができます。](https://github.com/Tencent/ncnn)
 
 * `cv::imread`や`cv::imwrite`などの highgui モジュールのイメージ IO 関数は、コードサイズを小さくするために [stb](https://github.com/nothings/stb) を使用して再実装されています。 `cv::imshow`などの GUI 関数は破棄されます。
 
-* モバイルには cuda がなく、ios には opencl がなく、android の opencl は遅いため、cuda と opencl は無効になっています。 GPU 上の opencv は実際の制作には適していません。優れた GPU アクセラレーションが必要な場合は、iOS では metal を書き込み、Android では opengles/vulkan を書き込みます。
+* cuda と opencl は無効になっています。モバイルには cuda が無く、ios には opencl が無く、android の opencl は遅いためです。 GPU 上の opencv は実際の制作には適していません。優れた GPU アクセラレーションが必要な場合は、iOS では metal、Android では opengles/vulkan を書いてください。
 
 * C++ RTTI と例外は、モバイル プラットフォーム上の最小限のビルドと WebAssembly ビルドでは無効になっています。書くときは気をつけてね```cv::Mat roi = image(roirect);```  :P
 
@@ -160,20 +160,20 @@ zip -r -9 opencv-mobile-4.8.0.zip install
 |opencv_videostab|do video stablization on powerful pc or server|
 |opencv_viz|vtk is not available on mobile, write your own data visualization routines|
 
-## Milk-V Duoでの使い方
+## Milk-V Duo での使うには?
 オリジナルリンク: https://community.milkv.io/t/opencv-mobile-opencv-milkv-duo/557
 
 ### TL;DR
 
 パッケージ化された zip ファイルをコンパイルして準備を整えます。
 
-1. 以下を開きます。 https://github.com/nihui/opencv-mobile
+1. Webサイト https://github.com/nihui/opencv-mobile を開きます。
 2. opencv-mobile-4.8.0-milkv-duo.zip をダウンロードし解凍します。
-3. Run cmake `-DOpenCV_DIR=<unzip_directory>/lib/cmake/opencv4` + `find_package(OpenCV)` + `target_link_libraries(your-program ${OpenCV_LIBS})`
+3. cmake `-DOpenCV_DIR=<unzip_directory>/lib/cmake/opencv4` + `find_package(OpenCV)` + `target_link_libraries(your-program ${OpenCV_LIBS})` を実行します。
 
 ### opencv-mobile
 
-opencv-mobile は、コンパイル パラメーターを調整し、一部の opencv ソース コードを削除することにより、コンパイルされた opencv ライブラリを最小化します。 
+opencv-mobile はコンパイル後の opencv ライブラリを最小化するために、コンパイル パラメーターを調整し、一部の opencv ソース コードを削除しています。 
 
 * 画像の読み取り/書き込み、画像処理、行列演算などの一般的な opencv 機能を提供します。 
 * アップストリームと同期されており、サードパーティの依存関係はありません。 
@@ -231,7 +231,7 @@ make install
 
 コンパイル後、opencv-mobile/build/install で opencv-mobile が準備されます。
 
-コンパイル プロセス中に、CMake が RVV ベクター サポートを正常に検出して有効にしたことがわかります。これにより、milkv-duo チップが高速化されます。
+コンパイル プロセス中、CMake が RVV ベクター サポートを正常に検出して有効にしたことがわかります。これにより、milkv-duo チップが高速化されます。
 
 ```txt
 -- Performing Test HAVE_CPU_RVV_SUPPORT (check file: cmake/checks/cpu_rvv.cpp)
@@ -381,7 +381,7 @@ Error relocating ./opencv-mobile-test: GOMP_loop_end_nowait: symbol not found
 Error relocating ./opencv-mobile-test: omp_get_max_threads: symbol not found
 ```
 
-ツールチェーンから以下を見つけ`/home/nihui/osd/host-tools/gcc/riscv64-linux-musl-x86_64/sysroot/lib64v0p7_xthead/lp64d/libgomp.so.1.0.0`, コピーして名前を`root@192.168.42.1:/root/libgomp.so.1`にリネームします。次に `LD_LIBRARY_PATH` を追加してプログラムを実行すると、正常に終了するはずです。
+ツールチェーンから以下を見つけ `/home/nihui/osd/host-tools/gcc/riscv64-linux-musl-x86_64/sysroot/lib64v0p7_xthead/lp64d/libgomp.so.1.0.0`, コピーして名前を `root@192.168.42.1:/root/libgomp.so.1`にリネームします。次に `LD_LIBRARY_PATH` を追加してプログラムを実行すると、正常に終了するはずです。
 
 ```txt
 [root@milkv]~# LD_LIBRARY_PATH=. ./opencv-mobile-test

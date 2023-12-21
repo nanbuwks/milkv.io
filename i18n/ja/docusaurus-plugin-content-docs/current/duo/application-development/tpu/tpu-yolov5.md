@@ -7,16 +7,16 @@ sidebar_position: 30
 
 ## 1. Windowsで元のモデルファイルを準備する
 
-### YOLOv5開発キットとyolov5n.ptファイルを準備する
+### YOLOv5 開発キットと yolov5n.pt ファイルを準備する
 
 
-[YOLOv5 development toolkit](https://codeload.github.com/ultralytics/yolov5/zip/refs/heads/master)と [yolov5n.pt](https://github.com/ultralytics/yolov5/releases/download/v6.2/yolov5n.pt)をダウンロードします。ダウンロードが完了したら、ツールキットを解凍し、`yolov5n.pt`ファイルを`yolov5-master`ディレクトリに配置します。
+[YOLOv5 development toolkit](https://codeload.github.com/ultralytics/yolov5/zip/refs/heads/master)と [yolov5n.pt](https://github.com/ultralytics/yolov5/releases/download/v6.2/yolov5n.pt)をダウンロードします。ダウンロードが完了したら、ツールキットを解凍し、`yolov5n.pt` ファイルを `yolov5-master` ディレクトリに配置します。
 
-### conda環境を設定する
+### conda 環境を設定する
 
 事前に[Anaconda](https://www.anaconda.com/) をインストールする必要があります。
 
-新しい`Anaconda Prompt`ターミナルを開き、`conda env list`を実行して現在の環境を表示します
+新しい`Anaconda Prompt` ターミナルを開き、`conda env list` を実行して現在の環境を表示します
 ```
 (base) C:\Users\Carbon> conda env list
 # conda environments:
@@ -24,7 +24,7 @@ sidebar_position: 30
 base                  *  C:\Users\Carbon\anaconda3
 ```
 
-新しいconda仮想環境を作成し、pythonのバージョン3.9.0をインストールします。duotpuはあなたが選んだ名前です。
+新しい conda 仮想環境を作成し、python のバージョン 3.9.0 をインストールします。`duotpu` の名前はあなたが自由に選んでください。
 ```
 (base) C:\Users\Carbon> conda create --name duotpu python=3.9.0
 ```
@@ -38,7 +38,7 @@ base                  *  C:\Users\Carbon\anaconda3
 duotpu                   C:\Users\Carbon\anaconda3\envs\duotpu
 ```
 
-新しくインストールした3.9.0の環境をアクティベートします。
+新しくインストールした 3.9.0 の環境をアクティベートします。
 ```
 (base) C:\Users\Carbon> activate duotpu
 ```
@@ -52,7 +52,7 @@ base                     C:\Users\Carbon\anaconda3
 duotpu                *  C:\Users\Carbon\anaconda3\envs\duotpu
 ```
 
-その後、以下のコマンドを使用してPyTorchバージョン1.12.1をインストールできます。具体的なインストールコマンドは、あなたの要件に基づいて選択してください。後続のプロセスではCPUのみが必要です。
+その後、以下のコマンドを使用して PyTorch バージョン 1.12.1 をインストールできます。具体的なインストールコマンドは、あなたの要件に基づいて選択してください。後続のプロセスでは CPU のみが必要です。
 ```
 # CUDA 10.2
 conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=10.2 -c pytorch
@@ -67,7 +67,7 @@ conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit
 conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cpuonly -c pytorch
 ```
 
-次に、ターミナルのパスを開発キットの`yolov5-master`パスに`cd`し、`pip install -r requirements.txt`を入力して他の依存関係をインストールします。
+次に、ターミナルのパスを開発キットの `yolov5-master` パスに `cd` し、`pip install -r requirements.txt` を入力して他の依存関係をインストールします。
 
 ```
 (duotpu) C:\Users\Carbon> cd Duo-TPU\yolov5-master
@@ -77,7 +77,7 @@ conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cpuonly -c 
 
 ### 元のモデルファイルを生成する
 
-`yolov5-master`ディレクトリに新しい`main.py`ファイルを作成し、そのファイルに以下のコードを書き込みます：
+`yolov5-master` ディレクトリに新しい `main.py` ファイルを作成し、そのファイルに以下のコードを書き込みます：
 ```
 import torch
 from models.experimental import attempt_download
@@ -88,7 +88,7 @@ model.model[-1].export = True
 torch.jit.trace(model, torch.rand(1, 3, 640, 640), strict=False).save('./yolov5n_jit.pt')
 ```
 
-次に、`yolov5-master/models/yolo.py`ファイルを見つけ、63行目から79行目までのコードをコメントアウトし、80行目に`return x`のコードを追加します。以下のようになります：
+次に、`yolov5-master/models/yolo.py` ファイルを見つけ、63 行目から 79 行目までのコードをコメントアウトし、80 行目に `return x` のコードを追加します。以下のようになります：
 
 ![duo](/docs/duo/tpu/duo-tpu-yolo5_01.png)
 
@@ -96,44 +96,44 @@ torch.jit.trace(model, torch.rand(1, 3, 640, 640), strict=False).save('./yolov5n
 ```
 C:\Users\Carbon\anaconda3\envs\duotpu\Lib\site-packages\torch\nn\modules\upsampling.py
 ```
-153行目付近で以下の変更を行います
+153 行目付近で以下の変更を行います
 
 ![duo](/docs/duo/tpu/duo-tpu-yolo5_02.png)
 
-修正が完了したら、`python main.py`ファイルを実行し、`yolov5-master`ディレクトリに`yolov5n_jit.pt`ファイルが生成されます。このファイルは、必要な元のモデルファイルです。
+修正が完了したら、`python main.py` ファイルを実行し、`yolov5-master` ディレクトリに `yolov5n_jit.pt` ファイルが生成されます。このファイルは、必要な元のモデルファイルです。
 ```
 (duotpu) C:\Users\Carbon\Duo-TPU\yolov5-master> python main.py
 ```
 
 ### conda環境を終了する（オプション）
 
-上記で必要なモデルファイルが生成されました。`conda deactivate`コマンドを使用してconda環境を終了できます：
+上記で必要なモデルファイルが生成されました。`conda deactivate`コマンドを使用して conda 環境を終了できます：
 ```
 (duotpu) C:\Users\Carbon\Duo-TPU\yolov5-master> conda deactivate
 ```
 
-このconda仮想環境（duotpu）がもう必要ない場合は、以下のコマンドで削除できます：
+この conda 仮想環境（duotpu）がもう必要ない場合は、以下のコマンドで削除できます：
 ```
 conda env remove --name <envname>
 ```
 
-## 2. Docker開発環境の設定
+## 2. Docker 開発環境の設定
 
-[こちら](https://milkv.io/docs/duo/application-development/tpu/tpu-docker)を参照してください。Docker開発環境を設定した後、ここに戻って次のステップを続けてください
+[こちら](https://milkv.io/docs/duo/application-development/tpu/tpu-docker)を参照してください。Docker 開発環境を設定した後、ここに戻って次のステップを続けてください
 
 ## 3. Docker内で作業ディレクトリを準備する
 
-`yolov5n_torch`作業ディレクトリを作成し、それに入ります。これは`tpu-mlir`と同じレベルのディレクトリであることに注意してください。そして、モデルファイルと画像ファイルをこのディレクトリに入れます。
+`yolov5n_torch` 作業ディレクトリを作成し、それに入ります。これは `tpu-mlir` と同じ階層のディレクトリであることに注意してください。そして、モデルファイルと画像ファイルをこのディレクトリに入れます。
 ```
 # mkdir yolov5n_torch && cd yolov5n_torch
 ```
 
-新しいWindowsターミナルを作成し、`yolov5n_jit.pt`をWindowsからDockerにコピーします。
+新しい Windows ターミナルを作成し、`yolov5n_jit.pt`を Windows から Docker にコピーします。
 ```
 docker cp <path>/yolov5-master/yolov5n_jit.pt <container_name>:/workspace/yolov5n_torch/yolov5n_jit.pt
 ```
 
-`<path>`は、Windowsシステム内のyolov5開発キットが位置しているファイルディレクトリで、`<container_name>`はコンテナ名です。例えば、
+`<path>` は、Windows システム内の yolov5 開発キットが位置しているファイルディレクトリで、`<container_name>`はコンテナ名です。例えば、
 ```
 docker cp C:\Users\Carbon\Duo-TPU\yolov5-master\yolov5n_jit.pt DuoTPU:/workspace/yolov5n_torch/yolov5n_jit.pt
 ```
@@ -143,9 +143,9 @@ Dockerターミナルに戻り、画像ファイルを現在のディレクト�
 # cp -rf ${TPUC_ROOT}/regression/dataset/COCO2017 .
 # cp -rf ${TPUC_ROOT}/regression/image .
 ```
-ここでの`${TPUC_ROOT}`は環境変数で、`tpu-mlir`ディレクトリに対応しており、Docker開発環境の前の設定で`source ./tpu-mlir/envsetup.sh`ステップでロードされます。
+ここでの`${TPUC_ROOT}`は環境変数で、`tpu-mlir`ディレクトリに対応しており、Docker 開発環境の前の設定で `source ./tpu-mlir/envsetup.sh` ステップでロードされます。
 
-`MLIR`や`cvimodel`などのコンパイル済みファイルを保存するための`work`作業ディレクトリを作成し、その中に入ります。
+`MLIR` や `cvimodel` などのコンパイル済みファイルを保存するための `work` 作業ディレクトリを作成し、その中に入ります。
 ```
 # mkdir work && cd work
 ```
@@ -153,16 +153,16 @@ Dockerターミナルに戻り、画像ファイルを現在のディレクト�
 ## 4. YOLOv5n-TORCH モデルの変換
 
 :::tip
-Duo開発ボードはCV1800Bチップを搭載しており、**ONNX series** と **Caffe models**をサポートしています。現在、TFLiteモデルはサポートしていません。量子化データ型については、**quantization in BF16 format** と **asymmetric quantization in INT8 format**をサポートしています。
+Duo開発ボードはCV1800Bチップを搭載しており、**ONNX series** と **Caffe models**をサポートしています。現在、TFLite モデルはサポートしていません。量子化データ型については、**quantization in BF16 format** と **asymmetric quantization in INT8 format**をサポートしています。
 :::
 
 モデル変換の手順は以下の通りです：
 
-- CaffeモデルをMLIRに変換
+- Caffe モデルをMLIR に変換
 - 量子化に必要なキャリブレーションテーブルを生成
-- MLIRを非対称INT8 cvimodelに量子化
+- MLIR を非対称 INT8 cvimodel に量子化
 
-### TORCHモデルをMLIRに変換
+### TORCH モデルを MLIR に変換
 
 この例では、モデルはRGB入力で、`mean`と`scale`はそれぞれ`0,0,0`と`0.0039216`, `0.0039216`, `0.0039216`です。 TORCHモデルをMLIRモデルに変換するコマンドは以下の通りです。
  ```
@@ -188,7 +188,7 @@ MLIRモデルに変換した後、`yolov5n.mlir`ファイルが生成されま�
 
 ![duo](/docs/duo/tpu/duo-tpu-yolo5_07.png)
 
-### MLIRをINT8モデルに変換
+### MLIR を INT8 モデルに変換
 
 #### 量子化に必要なキャリブレーションテーブルを生成
 
@@ -234,32 +234,32 @@ MLIRモデルをINT8モデルに変換するコマンドは以下の通りです
 
 ![duo](/docs/duo/tpu/duo-tpu-yolo5_11.png)
 
-## 5. Duo開発ボードでの検証
+## 5. Duo 開発ボードでの検証
 
-### Duo開発ボードの接続
+### Duo 開発ボードの接続
 
-前のチュートリアルに従ってDuo開発ボードとコンピューターの接続を完了し、`mobaxterm`や`Xshell`などのツールを使用してDuo開発ボードを操作するためのターミナルを開きます。
+前のチュートリアルに従ってDuo開発ボードとコンピューターの接続を完了し、`mobaxterm`や`Xshell`などのツールを使用して Duo 開発ボードを操作するためのターミナルを開きます。
 
-### tpu-sdkの取得
+### tpu-sdk の取得
 
-Dockerターミナルで`/workspace`ディレクトリに切り替えます
+Docker ターミナルで`/workspace`ディレクトリに切り替えます
 ```
 cd /workspace
 ```
 
-tpu-sdkをダウンロードします
+tpu-sdk をダウンロードします
 ```
 git clone https://github.com/milkv-duo/tpu-sdk.git
 ```
 
-### tpu-sdkとモデルファイルをDuoにコピー
+### tpu-sdk とモデルファイルを Duo にコピー
 
-Duoボードのターミナルで、新しいディレクトリ`/mnt/tpu/`を作成します
+Duo ボードのターミナルで、新しいディレクトリ `/mnt/tpu/` を作成します
 ```
 # mkdir -p /mnt/tpu && cd /mnt/tpu
 ```
 
-Dockerターミナルで、`tpu-sdk`とモデルファイルをDuoにコピーします
+Dockerターミナルで、`tpu-sdk`とモデルファイルを Duo にコピーします
 ```
 # scp -r /workspace/tpu-sdk root@192.168.42.1:/mnt/tpu/
 # scp /workspace/yolov5n_torch/work/yolov5n_int8_fuse.cvimodel root@192.168.42.1:/mnt/tpu/tpu-sdk/
@@ -267,7 +267,7 @@ Dockerターミナルで、`tpu-sdk`とモデルファイルをDuoにコピー�
 
 ### 環境変数を設定
 
-Duoボードのターミナルで、環境変数を設定します
+Duo ボードのターミナルで、環境変数を設定します
 ```
 # cd /mnt/tpu/tpu-sdk
 # source ./envs_tpu_sdk.sh
@@ -275,7 +275,7 @@ Duoボードのターミナルで、環境変数を設定します
 
 ### 物体検出を実行
 
-Duoボード上で、画像に対して物体検出を実行します
+Duo ボード上で、画像に対して物体検出を実行します
 
 ![duo](/docs/duo/tpu/duo-tpu-dog.jpg)
 
@@ -291,13 +291,13 @@ Duoボード上で、画像に対して物体検出を実行します
 
 ![duo](/docs/duo/tpu/duo-tpu-yolo5_12.png)
 
-操作が成功すると、検出結果ファイル`yolov5n_out.jpg`が生成されます。これは、Windowsターミナルのscpコマンドを通じてPCに引き出すことができます。
+操作が成功すると、検出結果ファイル `yolov5n_out.jpg` が生成されます。これは、Windows ターミナルの scp コマンドを通じて PC に引き出すことができます。
 ```
 scp root@192.168.42.1:/mnt/tpu/tpu-sdk/yolov5n_out.jpg .
 ```
 
 ![duo](/docs/duo/tpu/duo-tpu-yolo5_13.png)
 
-Windows PC上でテスト結果ファイルを表示します。
+Windows PC 上でテスト結果ファイルを表示します。
 
 ![duo](/docs/duo/tpu/duo-tpu-yolo5_14.jpg)

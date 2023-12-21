@@ -11,7 +11,7 @@ sidebar_position: 37
 
 ## 2. Docker内で作業ディレクトリを準備する
 
-`googlenet`作業ディレクトリを作成し、それに入ります。これは`tpu-mlir`と同じレベルのディレクトリであることに注意してください。
+`googlenet` 作業ディレクトリを作成し、それに入ります。これは `tpu-mlir` と同じ階層のディレクトリであることに注意してください。
 ```
 # mkdir googlenet && cd googlenet
 ```
@@ -26,7 +26,7 @@ wget https://github.com/onnx/models/raw/main/vision/classification/inception_and
 # cp -rf ${TPUC_ROOT}/regression/dataset/ILSVRC2012/ .
 # cp -rf ${TPUC_ROOT}/regression/image/ .
 ```
-ここでの`${TPUC_ROOT}`は環境変数で、`tpu-mlir`ディレクトリに対応しており、Docker開発環境の前の設定で`source ./tpu-mlir/envsetup.sh`ステップでロードされます。
+ここでの`${TPUC_ROOT}` は環境変数で、`tpu-mlir`ディレクトリに対応しています。Docker 開発環境を設定したときに、 `source ./tpu-mlir/envsetup.sh` ステップで既にロードされています。
 
 `MLIR`や`cvimodel`などのコンパイル済みファイルを保存するための`work`作業ディレクトリを作成し、その中に入ります
 ```
@@ -36,13 +36,13 @@ wget https://github.com/onnx/models/raw/main/vision/classification/inception_and
 ## 3. ONNXモデルの変換
 
 :::tip
-The Duo development board is equipped with the CV1800B chip, which supports the **ONNX series** and **Caffe models**. Currently, it does not support TFLite models. In terms of quantized data types, it supports **quantization in BF16 format** and **asymmetric quantization in INT8 format**.
+
 Duo開発ボードはCV1800Bチップを搭載しており、**ONNX series**と**Caffe models**をサポートしています。現在、TFLiteモデルはサポートしていません。量子化データ型については、 **quantization in BF16 format** と **asymmetric quantization in INT8 format**をサポートしています。
 :::
 
 ### ONNXモデルをMLIRに変換
 
-この例のモデルはRGB入力で、`mean`と`scale`はそれぞれ`123.675,116.28,103.53`と`0.0171,0.0175,0.0174`です。モデル変換コマンドは以下の通りです：
+この例のモデルはRGB入力で、`mean` と` scale` はそれぞれ `123.675,116.28,103.53` と `0.0171,0.0175,0.0174` です。モデル変換コマンドは以下の通りです：
 ```
 model_transform.py \
  --model_name googlenet \
@@ -61,7 +61,7 @@ model_transform.py \
 
 ![duo](/docs/duo/tpu/duo-tpu-googlenet_05.png)
 
-MLIRモデルに変換した後、`googlenet.mlir`ファイルが生成されます。これはMLIRモデルファイルです。また、`googlenet_in_f32.npz`ファイルと`googlenet_top_outputs.npz`ファイルも生成されます。これらは、後続のモデル変換の入力ファイルです。
+MLIR モデルに変換した後、`googlenet.mlir`ファイルが生成されます。これは MLIR モデルファイルです。また、`googlenet_in_f32.npz`ファイルと`googlenet_top_outputs.npz`ファイルも生成されます。これらは、後続のモデル変換の入力ファイルです。
 
 ![duo](/docs/duo/tpu/duo-tpu-googlenet_06.png)
 
@@ -82,7 +82,7 @@ model_deploy.py \
 
 ![duo](/docs/duo/tpu/duo-tpu-googlenet_07.png)
 
-操作が完了すると、`googlenet_cali_table`ファイルが生成されます。これは、後続のINT8モデルのコンパイルに使用されます。
+操作が完了すると、`googlenet_cali_table`ファイルが生成されます。これは、後続の INT8 モデルのコンパイルに使用されます。
 
 ![duo](/docs/duo/tpu/duo-tpu-googlenet_08.png)
 
@@ -108,7 +108,7 @@ run_calibration.py googlenet.mlir \
 
 #### MLIRを非対称INT8 cvimodelに量子化
 
-MLIRモデルをINT8モデルに変換するコマンドは以下の通りです：
+MLIR モデルを INT8 モデルに変換するコマンドは以下の通りです：
 ```
 model_deploy.py \
  --mlir googlenet.mlir \
@@ -134,28 +134,28 @@ model_deploy.py \
 
 ### Duo開発ボードの接続
 
-前のチュートリアルに従ってDuo開発ボードとコンピューターの接続を完了し、`mobaxterm`や`Xshell`などのツールを使用してDuo開発ボードを操作するためのターミナルを開きます。
+前のチュートリアルに従って Duo 開発ボードとコンピューターの接続を完了し、`mobaxterm`や`Xshell`などのツールを使用して Duo 開発ボードを操作するためのターミナルを開きます。
 
 ### tpu-sdkの取得
 
-Dockerターミナルで`/workspace`ディレクトリに切り替えます
+Docker ターミナルで `/workspace` ディレクトリに切り替えます
 ```
 cd /workspace
 ```
 
-tpu-sdkをダウンロードします
+tpu-sdk をダウンロードします
 ```
 git clone https://github.com/milkv-duo/tpu-sdk.git
 ```
 
-### tpu-sdkとモデルファイルをDuoにコピーします
+### tpu-sdk とモデルファイルを Duo にコピーします
 
-Duoボードのターミナルで、新しいディレクトリ`/mnt/tpu/`を作成します
+Duoボードのターミナルで、新しいディレクトリ `/mnt/tpu/` を作成します
 ```
 # mkdir -p /mnt/tpu && cd /mnt/tpu
 ```
 
-Dockerターミナルで、`tpu-sdk`とモデルファイルをDuoにコピーします
+Docker ターミナルで、 `tpu-sdk` とモデルファイルを Duo にコピーします
 ```
 # scp -r /workspace/tpu-sdk root@192.168.42.1:/mnt/tpu/
 # scp /workspace/googlenet/work/googlenet_cv180x_bf16.cvimodel root@192.168.42.1:/mnt/tpu/tpu-sdk/
@@ -164,7 +164,7 @@ Dockerターミナルで、`tpu-sdk`とモデルファイルをDuoにコピー�
 
 ### 環境変数を設定します
 
-Duoボードのターミナルで、環境変数を設定します
+Duo ボードのターミナルで、環境変数を設定します
 ```
 # cd /mnt/tpu/tpu-sdk
 # source ./envs_tpu_sdk.sh
@@ -172,11 +172,11 @@ Duoボードのターミナルで、環境変数を設定します
 
 ### 画像分類を実行します
 
-Duoボード上で、画像に対して画像分類を実行します
+Duo ボード上で、画像に対して画像分類を実行します
 
 ![duo](/docs/duo/tpu/duo-tpu-cat.jpg)
 
-`googlenet_cv180x_bf16.cvimodel`モデルを使用した画像分類
+`googlenet_cv180x_bf16.cvimodel` モデルを使用した画像分類
 ```
 ./samples/bin/cvi_sample_classifier_bf16 \
  ./googlenet_cv180x_bf16.cvimodel \
@@ -188,7 +188,7 @@ Duoボード上で、画像に対して画像分類を実行します
 
 ![duo](/docs/duo/tpu/duo-tpu-googlenet_13.png)
 
-`googlenet_cv180x_int8_fuse.cvimodel`モデルを使用した画像分類
+`googlenet_cv180x_int8_fuse.cvimodel` モデルを使用した画像分類
 ```
 ./samples/bin/cvi_sample_classifier_fused_preprocess \
  ./googlenet_cv180x_int8_fuse.cvimodel \

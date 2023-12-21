@@ -46,7 +46,7 @@ Milk-V Duo のワイヤリングX ピン番号は、Duo のピン名の番号と
 
 </div>
 
-Duo のピンの多くは多目的機能を備えていることに注意してください。 `WireringX`を使用して各ピンの機能を制御する場合、ピンの現在の状態を確認して、目的の機能と一致していることを確認することが重要です。そうでない場合は、`duo-pinmux`コマンドを使用して目的の機能に切り替えることができます。
+Duo のピンの多くは複数の機能を備えていることに注意してください。 `WireringX`を使用して各ピンの機能を制御する場合、ピンの現在の状態を確認して、目的の機能と一致していることを確認することが重要です。そうでない場合は、`duo-pinmux`コマンドを使用して目的の機能に切り替えることができます。
 
 詳細については、詳細な使用手順を参照してください。
 [pinmux](https://milkv.io/docs/duo/application-development/pinmux)
@@ -75,7 +75,7 @@ Duo のピンの多くは多目的機能を備えていることに注意して�
 
 <details><summary>void delayMicroseconds(unsigned int ms)</summary>
 
-  何ミリ秒かの遅延
+  指定マイクロ秒の遅延
 
 </details>
 
@@ -116,8 +116,8 @@ Duo のピンの多くは多目的機能を備えていることに注意して�
 <details><summary>int digitalWrite(int pin, enum digital_value_t value)</summary>
 
   指定したピンの出力値を設定します。値は
-  - HIGH high level
-  - LOW low level
+  - HIGH ハイレベル
+  - LOW ローレベル
 
 </details>
 
@@ -125,7 +125,7 @@ Duo のピンの多くは多目的機能を備えていることに注意して�
 <details><summary>int waitForInterrupt(int pin, int ms)</summary>
 
   ミリ秒ミリ秒のタイムアウトで、ピンで割り込みが発生するのを待ちます。
-  *この関数は廃止されました。配線XISRの使用をお勧めします*
+  *この関数は廃止されました。wiringXISRの使用をお勧めします*
 
 </details>
 
@@ -313,12 +313,12 @@ Duo でコンパイルして実行した後、マルチメータまたはオシ�
 
 Duo でコンパイルして実行した後、マルチメータまたはオシロスコープを使用してピン 20 の状態を測定し、それが予想される動作と一致するかどうかを確認できます。
 
-オンボード LED ピンを使用して動作を確認することもできます。 LEDのオン/オフ状態を観察することで、プログラムが正しく実行されているかどうかを直感的に判断できます。 LED の WiringX ピン番号は `25`です。ピン`15`をピン `25`に置き換えて、上記のコードを変更するだけです。ただし、デフォルトのファームウェアには起動時に LED の点滅を制御するスクリプトが含まれており、これを無効にする必要があることに注意してください。無効にする方法については、以下の[blink](#blink)の説明例を参照してください。
+ボード上の LED ピンを使用して動作を確認することもできます。 LEDのオン/オフ状態を観察することで、プログラムが正しく実行されているかどうかを直感的に判断できます。 LED の WiringX ピン番号は `25`です。ピン`15`をピン `25`に置き換えて、上記のコードを変更するだけです。ただし、デフォルトのファームウェアには起動時に LED の点滅を制御するスクリプトが含まれており、これを無効にする必要があることに注意してください。無効にする方法については、以下の[blink](#blink)の説明例を参照してください。
 
 
-### I2Cの使用例
+### I2C の使用例
 
-ここではI2Cとの通信の仕方を説明します。
+これは I2C 通信のサンプルです。
 
 ```c
 #include <stdio.h>
@@ -353,7 +353,7 @@ int main(void)
 
 ### SPIの使用例
 
-ここではSPIとの通信の仕方を説明します。
+これは SPI 通信のサンプルです。
 
 ```c
 #include <stdio.h>
@@ -468,7 +468,7 @@ USB - シリアル変換ケーブルの RX は Duo のピン 4 (UART4_TX) に接
   cd hello-world
   make
   ```
-  コンパイルが成功したら、生成された `helloworld`実行可能プログラムをネットワーク ポートまたは RNDIS ネットワーク経由で Duo デバイスに送信します。たとえば、 [default firmware](https://github.com/milkv-duo/duo-buildroot-sdk/releases)でサポートされている RNDIS 方式、Duo の IP は 192.168.42.1、ユーザー名は`root`、パスワードは`milkv`です。
+  コンパイルが成功したら、生成された `helloworld`実行可能プログラムをネットワーク ポートまたは RNDIS ネットワーク経由で Duo デバイスに送信します。たとえば、 [default firmware](https://github.com/milkv-duo/duo-buildroot-sdk/releases)でサポートされている RNDIS を使う場合、Duo の IP は 192.168.42.1、ユーザー名は`root`、パスワードは`milkv`です。
   ```
   scp helloworld root@192.168.42.1:/root/
   ```
@@ -499,11 +499,11 @@ Note:
 
 ### [hello-world](https://github.com/milkv-duo/duo-examples/tree/main/hello-world)
 
-Duoの周辺機器とは対話せず、出力"Hello, World!"を印刷するだけのシンプルな例です。これは開発環境を確認するためのものです。
+Duo の周辺機器とは対話せず、"Hello, World!" を出力表示するだけのシンプルな例です。これは開発環境を確認するためのものです。
 
 ### [blink](https://github.com/milkv-duo/duo-examples/tree/main/blink)
 
-この例では、GPIOピンに接続されたLEDを制御する方法を示しています。WiringXライブラリを使用してGPIOピンの電圧レベルを切り替え、LEDが点滅するようにします。 
+この例では、GPIO ピンに接続された LED を制御する方法を示しています。WiringX ライブラリを使用して GPIO ピンの電圧レベルを切り替え、LED が点滅するようにします。 
 
 `blink.c`コードには、WiringX ライブラリからのプラットフォームの初期化および GPIO 操作メソッドが含まれています。
 

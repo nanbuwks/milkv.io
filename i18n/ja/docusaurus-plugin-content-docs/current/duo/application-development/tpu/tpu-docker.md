@@ -3,15 +3,15 @@ sidebar_label: 'Docker開発環境の設定'
 sidebar_position: 20
 ---
 
-# Docker開発環境の設定
+# Docker 開発環境の設定
 
-## Dockerのインストール
+## Docker のインストール
 
-Windows環境では、`Docker Desktop for Windows`をインストールできます。[Dockerのダウンロード](https://docs.docker.com/desktop/install/windows-install/)
+Windows 環境では、`Docker Desktop for Windows`をインストールできます。[Dockerのダウンロード](https://docs.docker.com/desktop/install/windows-install/)
 
 ![duo](/docs/duo/tpu/duo-tpu-docker_01.png)
 
-Windows下でDockerを実行するには、関連する依存関係が必要です。図に示すように、WSL2バックエンドまたはHyper-Vバックエンドを実行依存関係として使用する必要があります。
+Windows 下で Docker を実行するには、関連する依存関係が必要です。図に示すように、WSL2 バックエンドまたは Hyper-V バックエンドを実行依存関係として使用する必要があります。
 
 Hyper-Vバックエンドの有効化方法は以下の通りです：
 
@@ -22,9 +22,9 @@ Hyper-Vバックエンドの有効化方法は以下の通りです：
 
 次に、`Docker Desktop for Windows`をインストールし、ダウンロードします。インストールガイドに従って、選択したバックエンドに応じて適切なチェックを行います。
 
-インストールが完了したら、コンピュータを再起動してからDockerを使用できます。
+インストールが完了したら、コンピュータを再起動してから Docker を使用できます。
 
-## 開発に必要なDockerイメージをプルする
+## 開発に必要な Docker イメージをプルする
 
 Docker hubからイメージファイルを取得します
 ```
@@ -52,12 +52,12 @@ f835d42d7adc: Download complete
 2b009425c205: Downloading  252.9MB/1.098GB
 ```
 
-## Dockerコンテナの起動
+## Docker コンテナの起動
 
 ```
 docker run --privileged --name <container_name> -v /workspace -it sophgo/tpuc_dev:v3.1
 ```
-`<container_name>`は自分で定義したコンテナ名です。例えばDuoTPUです。
+`<container_name>`は自分で定義したコンテナ名です。例えば DuoTPU です。
 ```
 docker run --privileged --name DuoTPU -v /workspace -it sophgo/tpuc_dev:v3.1
 ```
@@ -78,7 +78,7 @@ f3a060efb1d3   sophgo/tpuc_dev:v3.1   "/bin/bash"
 docker exec -it f3a060efb1d3 /bin/bash
 ```
 
-Dockerターミナルで、現在のディレクトリが`/workspace`であるか確認します。そうでない場合は、`cd`コマンドを使用してディレクトリに入ります。
+Dockerターミナルで、現在のディレクトリが `/workspace` であるか確認します。そうでない場合は、 `cd` コマンドを使用してディレクトリに入ります。
 ```
 # cd /workspace/
 ```
@@ -88,12 +88,12 @@ Dockerターミナルで、現在のディレクトリが`/workspace`である�
 
 ## 開発キットの取得と環境変数の追加
 
-DockerターミナルでTPU-MLIRモデル変換ツールキットをダウンロードします。
+Docker ターミナルで TPU-MLIR モデル変換ツールキットをダウンロードします。
 ```
 git clone https://github.com/milkv-duo/tpu-mlir.git
 ```
 
-Dockerターミナルで、`source`コマンドを使用して環境変数を追加します。
+Docker ターミナルで、`source`コマンドを使用して環境変数を追加します。
 ```
 # source ./tpu-mlir/envsetup.sh
 ```

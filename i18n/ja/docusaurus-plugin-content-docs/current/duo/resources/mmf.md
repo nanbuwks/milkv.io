@@ -10,7 +10,7 @@ sidebar_position: 20
 <table>
 <thead>
   <tr>
-    <td>Chinese Version(中文版)</td>
+    <td>Chinese Version(中国語版)</td>
     <td colspan="2">格式</td>
     <td>English Version</td>
     <td colspan="2">Format</td>

@@ -44,7 +44,7 @@ USB ネットワークを使用するために、システムではデフォル�
 
 ![rndis-step8](/docs/duo/rndis-step8.png)
 
-10.  "USB RNDIS Adapter"があるか確認してください。
+10. "USB RNDIS Adapter"があるか確認してください。
 
 ![rndis-step9](/docs/duo/rndis-step9.png)
 
@@ -144,9 +144,9 @@ USB-to-TTL ケーブルの各ピンは次のように定義されます。
 
 | Milk-V Dou   | <---> | USB to TTL |
 | ------------ | ----- | ---------- |
-| TX (pin 16)  | <---> | White wire |
-| RX (pin 17)  | <---> | Green wire |
-| GND (pin 18) | <---> | Black wire |
+| TX (pin 16)  | <---> | 白線 |
+| RX (pin 17)  | <---> | 緑線 |
+| GND (pin 18) | <---> | 黒線 |
 
 
 ![duo-serial](/docs/duo/duo-serial.jpg)
