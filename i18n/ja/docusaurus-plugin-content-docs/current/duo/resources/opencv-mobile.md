@@ -59,7 +59,7 @@ https://github.com/nihui/opencv-mobile/releases/latest
 
 1. アーカイブを以下に展開します。 ```<project dir>/```
 2.  ```<project dir>/CMakeListst.txt``` の箇所を見つけて OpenCV へのリンクに変更します
-3. windows のビルドのためには、cmake option  ```-DOpenCV_STATIC=ON``` を追加します
+3. Windows でのビルドのためには、cmake option  ```-DOpenCV_STATIC=ON``` を追加します
 
 ```cmake
 set(OpenCV_DIR ${CMAKE_SOURCE_DIR}/opencv-mobile-4.8.0-armlinux/arm-linux-gnueabihf/lib/cmake/opencv4)
